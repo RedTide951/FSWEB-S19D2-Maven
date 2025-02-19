@@ -3,9 +3,11 @@ package com.workintech.s18d4.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
-public class Customer {
+public class CustomerRepository {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,8 +19,8 @@ public class Customer {
 
     @OneToOne
     @JoinColumn(name = "address_id")
-    private Address address;
+    private AddressRepository address;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Account> accounts;
+    private List<AccountRepository> accounts;
 }

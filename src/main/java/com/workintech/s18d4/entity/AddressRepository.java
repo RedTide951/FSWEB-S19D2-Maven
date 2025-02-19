@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Address {
+public class AddressRepository {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,5 +17,5 @@ public class Address {
     private String description;
 
     @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Customer customer;
+    private CustomerRepository customer;
 }

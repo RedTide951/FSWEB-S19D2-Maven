@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Account {
+public class AccountRepository {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,5 +15,5 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private CustomerRepository customer;
 }

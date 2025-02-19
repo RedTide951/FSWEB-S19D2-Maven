@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.workintech.s18d4.controller.AccountController;
 import com.workintech.s18d4.controller.CustomerController;
 import com.workintech.s18d4.dto.CustomerResponse;
-import com.workintech.s18d4.entity.Account;
-import com.workintech.s18d4.entity.Customer;
+import com.workintech.s18d4.entity.AccountRepository;
+import com.workintech.s18d4.entity.CustomerRepository;
 import com.workintech.s18d4.service.AccountService;
 import com.workintech.s18d4.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,30 +53,30 @@ class ControllerAndPropertiesTest {
     @MockBean
     private CustomerService customerService;
 
-    private Account sampleAccountForAccountControllerTest;
-    private Customer sampleCustomerForAccountControllerTest;
+    private AccountRepository sampleAccountForAccountControllerTest;
+    private CustomerRepository sampleCustomerForAccountControllerTest;
 
-    private Customer sampleCustomerForCustomerControllerTest;
+    private CustomerRepository sampleCustomerForCustomerControllerTest;
 
     @BeforeEach
     void setUp() {
-        sampleCustomerForAccountControllerTest = new Customer();
+        sampleCustomerForAccountControllerTest = new CustomerRepository();
         sampleCustomerForAccountControllerTest.setId(1L);
         sampleCustomerForAccountControllerTest.setEmail("customer@example.com");
         sampleCustomerForAccountControllerTest.setSalary(5000.00);
 
-        sampleAccountForAccountControllerTest = new Account();
+        sampleAccountForAccountControllerTest = new AccountRepository();
         sampleAccountForAccountControllerTest.setId(1L);
         sampleAccountForAccountControllerTest.setAccountName("Savings Account");
         sampleAccountForAccountControllerTest.setMoneyAmount(1000.00);
         sampleAccountForAccountControllerTest.setCustomer(sampleCustomerForAccountControllerTest);
 
         // Use an ArrayList to allow modifications
-        List<Account> modifiableAccountsList = new ArrayList<>();
+        List<AccountRepository> modifiableAccountsList = new ArrayList<>();
         modifiableAccountsList.add(sampleAccountForAccountControllerTest);
         sampleCustomerForAccountControllerTest.setAccounts(modifiableAccountsList);
 
-        sampleCustomerForCustomerControllerTest = new Customer();
+        sampleCustomerForCustomerControllerTest = new CustomerRepository();
         sampleCustomerForCustomerControllerTest.setId(1L);
         sampleCustomerForCustomerControllerTest.setEmail("customer@example.com");
         sampleCustomerForCustomerControllerTest.setSalary(5000.00);
@@ -156,14 +156,14 @@ class ControllerAndPropertiesTest {
     @DisplayName("AccountController::update")
     void testUpdateAccount() throws Exception {
         long customerId = sampleCustomerForAccountControllerTest.getId();
-        Account updatedAccount = new Account();
+        AccountRepository updatedAccount = new AccountRepository();
         updatedAccount.setId(sampleAccountForAccountControllerTest.getId());
         updatedAccount.setAccountName("Updated Account");
         updatedAccount.setMoneyAmount(2000.00);
         updatedAccount.setCustomer(sampleCustomerForAccountControllerTest);
 
         // Ensure the customer is associated with the account to be updated
-        List<Account> accounts = new ArrayList<>();
+        List<AccountRepository> accounts = new ArrayList<>();
         accounts.add(sampleAccountForAccountControllerTest);
         sampleCustomerForAccountControllerTest.setAccounts(accounts);
 

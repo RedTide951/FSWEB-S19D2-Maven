@@ -1,8 +1,8 @@
 package com.workintech.s18d4;
 
-import com.workintech.s18d4.entity.Account;
-import com.workintech.s18d4.entity.Address;
-import com.workintech.s18d4.entity.Customer;
+import com.workintech.s18d4.entity.AccountRepository;
+import com.workintech.s18d4.entity.AddressRepository;
+import com.workintech.s18d4.entity.CustomerRepository;
 import com.workintech.s18d4.repository.AccountRepository;
 import com.workintech.s18d4.repository.AddressRepository;
 import com.workintech.s18d4.repository.CustomerRepository;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,12 +35,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(ResultAnalyzer.class)
 class MainTest {
 
-    private Account sampleAccountForAccountEntity;
-    private Customer sampleCustomerForCustomerEntity;
+    private AccountRepository sampleAccountForAccountEntity;
+    private CustomerRepository sampleCustomerForCustomerEntity;
 
-    private Address sampleAddressForAddressEntity;
-    private Customer sampleCustomerForCustomerEntityTest;
-    private Account sampleAccountForCustomerEntityTest;
+    private AddressRepository sampleAddressForAddressEntity;
+    private CustomerRepository sampleCustomerForCustomerEntityTest;
+    private AccountRepository sampleAccountForCustomerEntityTest;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -52,20 +51,20 @@ class MainTest {
     @Autowired
     private AddressRepository addressRepository;
 
-    private Address sampleAddressForAddressRepositoryTest;
-    private Account sampleAccountForAccountRepositoryTest;
+    private AddressRepository sampleAddressForAddressRepositoryTest;
+    private AccountRepository sampleAccountForAccountRepositoryTest;
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    private Customer sampleCustomerForCustomerRepositoryTest;
+    private CustomerRepository sampleCustomerForCustomerRepositoryTest;
     @Mock
     private AccountRepository mockAccountRepository;
 
 
     private AccountServiceImpl accountService;
 
-    private Account sampleAccountForAccountServiceTest;
+    private AccountRepository sampleAccountForAccountServiceTest;
 
     @Mock
     private CustomerRepository mockCustomerRepository;
@@ -73,16 +72,16 @@ class MainTest {
 
     private CustomerServiceImpl customerService;
 
-    private Customer sampleCustomerForCustomerServiceTest;
+    private CustomerRepository sampleCustomerForCustomerServiceTest;
 
     @BeforeEach
     void setUp() {
-        sampleAccountForAccountEntity = new Account();
+        sampleAccountForAccountEntity = new AccountRepository();
         sampleAccountForAccountEntity.setId(1L);
         sampleAccountForAccountEntity.setAccountName("Savings");
         sampleAccountForAccountEntity.setMoneyAmount(1500.0);
 
-        sampleCustomerForCustomerEntity = new Customer();
+        sampleCustomerForCustomerEntity = new CustomerRepository();
         sampleCustomerForCustomerEntity.setId(1L);
         sampleCustomerForCustomerEntity.setFirstName("John");
         sampleCustomerForCustomerEntity.setLastName("Doe");
@@ -90,7 +89,7 @@ class MainTest {
         sampleAccountForAccountEntity.setCustomer(sampleCustomerForCustomerEntity);
 
 
-        sampleAddressForAddressEntity = new Address();
+        sampleAddressForAddressEntity = new AddressRepository();
         sampleAddressForAddressEntity.setId(1L);
         sampleAddressForAddressEntity.setStreet("Main Street");
         sampleAddressForAddressEntity.setNo(100);
@@ -98,14 +97,14 @@ class MainTest {
         sampleAddressForAddressEntity.setCountry("Sample Country");
         sampleAddressForAddressEntity.setDescription("Near the big landmark");
 
-        sampleCustomerForCustomerEntityTest = new Customer();
+        sampleCustomerForCustomerEntityTest = new CustomerRepository();
         sampleCustomerForCustomerEntityTest.setId(2L);
         sampleCustomerForCustomerEntityTest.setFirstName("Jane");
         sampleCustomerForCustomerEntityTest.setLastName("Doe");
         sampleCustomerForCustomerEntityTest.setEmail("jane.doe@example.com");
         sampleCustomerForCustomerEntityTest.setSalary(3000.0);
 
-        sampleAccountForCustomerEntityTest = new Account();
+        sampleAccountForCustomerEntityTest = new AccountRepository();
         sampleAccountForCustomerEntityTest.setId(2L);
         sampleAccountForCustomerEntityTest.setAccountName("Checking");
         sampleAccountForCustomerEntityTest.setMoneyAmount(2500.0);
@@ -114,20 +113,20 @@ class MainTest {
         sampleAccountForCustomerEntityTest.setCustomer(sampleCustomerForCustomerEntityTest);
 
 
-        Customer customer = new Customer();
+        CustomerRepository customer = new CustomerRepository();
         customer.setFirstName("John");
         customer.setLastName("Doe");
         customer.setEmail("john.doe@example.com");
         customer = entityManager.persistFlushFind(customer);
 
 
-        sampleAccountForAccountRepositoryTest = new Account();
+        sampleAccountForAccountRepositoryTest = new AccountRepository();
         sampleAccountForAccountRepositoryTest.setAccountName("Savings Account");
         sampleAccountForAccountRepositoryTest.setMoneyAmount(1000.00);
         sampleAccountForAccountRepositoryTest.setCustomer(customer);
         entityManager.persistFlushFind(sampleAccountForAccountRepositoryTest);
 
-        sampleAddressForAddressRepositoryTest = new Address();
+        sampleAddressForAddressRepositoryTest = new AddressRepository();
         sampleAddressForAddressRepositoryTest.setStreet("Main Street");
         sampleAddressForAddressRepositoryTest.setNo(42);
         sampleAddressForAddressRepositoryTest.setCity("Sample City");
@@ -135,14 +134,14 @@ class MainTest {
         sampleAddressForAddressRepositoryTest.setDescription("Near the park");
         entityManager.persistFlushFind(sampleAddressForAddressRepositoryTest);
 
-        Address address = new Address();
+        AddressRepository address = new AddressRepository();
         address.setStreet("Main Street");
         address.setNo(42);
         address.setCity("Sample City");
         address.setCountry("Sample Country");
         entityManager.persist(address);
 
-        sampleCustomerForCustomerRepositoryTest = new Customer();
+        sampleCustomerForCustomerRepositoryTest = new CustomerRepository();
         sampleCustomerForCustomerRepositoryTest.setFirstName("John");
         sampleCustomerForCustomerRepositoryTest.setLastName("Doe");
         sampleCustomerForCustomerRepositoryTest.setEmail("john.doe@example.com");
@@ -151,13 +150,13 @@ class MainTest {
         entityManager.persist(sampleCustomerForCustomerRepositoryTest);
 
         MockitoAnnotations.openMocks(this);
-        sampleAccountForAccountServiceTest = new Account();
+        sampleAccountForAccountServiceTest = new AccountRepository();
         sampleAccountForAccountServiceTest.setId(1L);
         sampleAccountForAccountServiceTest.setAccountName("Savings Account");
         sampleAccountForAccountServiceTest.setMoneyAmount(1000.00);
         accountService = new AccountServiceImpl(mockAccountRepository);
 
-        sampleCustomerForCustomerServiceTest = new Customer();
+        sampleCustomerForCustomerServiceTest = new CustomerRepository();
         sampleCustomerForCustomerServiceTest.setId(1L);
         sampleCustomerForCustomerServiceTest.setFirstName("John");
         sampleCustomerForCustomerServiceTest.setLastName("Doe");
@@ -194,7 +193,7 @@ class MainTest {
     @Test
     @DisplayName("Test Customer Association")
     void testCustomerAssociation() {
-        Customer customer = new Customer(); // Assuming you have a default constructor
+        CustomerRepository customer = new CustomerRepository(); // Assuming you have a default constructor
         customer.setEmail("John Doe"); // Assuming Customer has this setter
         sampleAddressForAddressEntity.setCustomer(customer);
 
@@ -217,7 +216,7 @@ class MainTest {
     @DisplayName("AccountRepositoryTest::save")
     void testSaveAndFindByIdAccount() {
 
-        Optional<Account> foundAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
+        Optional<AccountRepository> foundAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
         assertTrue(foundAccount.isPresent());
         assertEquals(sampleAccountForAccountRepositoryTest.getAccountName(), foundAccount.get().getAccountName());
     }
@@ -228,7 +227,7 @@ class MainTest {
 
         sampleAccountForAccountRepositoryTest.setMoneyAmount(2000.00);
         accountRepository.save(sampleAccountForAccountRepositoryTest);
-        Optional<Account> updatedAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
+        Optional<AccountRepository> updatedAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
         assertTrue(updatedAccount.isPresent());
         assertEquals(2000.00, updatedAccount.get().getMoneyAmount());
     }
@@ -238,7 +237,7 @@ class MainTest {
     void testDeleteAccount() {
 
         accountRepository.delete(sampleAccountForAccountRepositoryTest);
-        Optional<Account> deletedAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
+        Optional<AccountRepository> deletedAccount = accountRepository.findById(sampleAccountForAccountRepositoryTest.getId());
         assertTrue(deletedAccount.isEmpty());
     }
 
@@ -246,7 +245,7 @@ class MainTest {
     @DisplayName("AddressRepositoryTest::save")
     void testSaveAndFindByIdAddress() {
 
-        Optional<Address> foundAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
+        Optional<AddressRepository> foundAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
         assertTrue(foundAddress.isPresent());
         assertEquals("Main Street", foundAddress.get().getStreet());
     }
@@ -257,7 +256,7 @@ class MainTest {
 
         sampleAddressForAddressRepositoryTest.setCity("Updated City");
         addressRepository.save(sampleAddressForAddressRepositoryTest);
-        Optional<Address> updatedAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
+        Optional<AddressRepository> updatedAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
         assertTrue(updatedAddress.isPresent());
         assertEquals("Updated City", updatedAddress.get().getCity());
     }
@@ -267,7 +266,7 @@ class MainTest {
     void testDeleteAddress() {
 
         addressRepository.delete(sampleAddressForAddressRepositoryTest);
-        Optional<Address> deletedAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
+        Optional<AddressRepository> deletedAddress = addressRepository.findById(sampleAddressForAddressRepositoryTest.getId());
         assertTrue(deletedAddress.isEmpty());
     }
 
@@ -275,7 +274,7 @@ class MainTest {
     @DisplayName("CustomerRepositoryTest::save")
     void testSaveAndFindByIdCustomer() {
 
-        Optional<Customer> foundCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
+        Optional<CustomerRepository> foundCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
         assertTrue(foundCustomer.isPresent());
         assertEquals("John", foundCustomer.get().getFirstName());
     }
@@ -286,7 +285,7 @@ class MainTest {
 
         sampleCustomerForCustomerRepositoryTest.setEmail("updated.email@example.com");
         customerRepository.save(sampleCustomerForCustomerRepositoryTest);
-        Optional<Customer> updatedCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
+        Optional<CustomerRepository> updatedCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
         assertTrue(updatedCustomer.isPresent());
         assertEquals("updated.email@example.com", updatedCustomer.get().getEmail());
     }
@@ -296,7 +295,7 @@ class MainTest {
     void testDeleteCustomer() {
 
         customerRepository.delete(sampleCustomerForCustomerRepositoryTest);
-        Optional<Customer> deletedCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
+        Optional<CustomerRepository> deletedCustomer = customerRepository.findById(sampleCustomerForCustomerRepositoryTest.getId());
         assertFalse(deletedCustomer.isPresent());
     }
 
@@ -304,7 +303,7 @@ class MainTest {
     @DisplayName("AccountService::findAll")
     void testFindAllAccount_AccountService() {
         when(mockAccountRepository.findAll()).thenReturn(Arrays.asList(sampleAccountForAccountServiceTest));
-        List<Account> result = accountService.findAll();
+        List<AccountRepository> result = accountService.findAll();
         assertEquals(1, result.size());
         assertEquals(sampleAccountForAccountServiceTest, result.get(0));
     }
@@ -313,15 +312,15 @@ class MainTest {
     @DisplayName("AccountService::find")
     void testFindAccount_AccountService() {
         when(mockAccountRepository.findById(1L)).thenReturn(Optional.of(sampleAccountForAccountServiceTest));
-        Account result = accountService.find(1L);
+        AccountRepository result = accountService.find(1L);
         assertEquals(sampleAccountForAccountServiceTest, result);
     }
 
     @Test
     @DisplayName("AccountService::save")
     void testSaveAccount_AccountService() {
-        when(mockAccountRepository.save(any(Account.class))).thenReturn(sampleAccountForAccountServiceTest);
-        Account savedAccount = accountService.save(sampleAccountForAccountServiceTest);
+        when(mockAccountRepository.save(any(AccountRepository.class))).thenReturn(sampleAccountForAccountServiceTest);
+        AccountRepository savedAccount = accountService.save(sampleAccountForAccountServiceTest);
         assertEquals(sampleAccountForAccountServiceTest, savedAccount);
     }
 
@@ -346,7 +345,7 @@ class MainTest {
     @DisplayName("CustomerService::findAll")
     void testFindAllCustomer() {
         when(mockCustomerRepository.findAll()).thenReturn(Arrays.asList(sampleCustomerForCustomerServiceTest));
-        List<Customer> result = customerService.findAll();
+        List<CustomerRepository> result = customerService.findAll();
         assertEquals(1, result.size());
         assertEquals(sampleCustomerForCustomerServiceTest, result.get(0));
     }
@@ -355,15 +354,15 @@ class MainTest {
     @DisplayName("CustomerService::find")
     void testFindCustomer() {
         when(mockCustomerRepository.findById(1L)).thenReturn(Optional.of(sampleCustomerForCustomerServiceTest));
-        Customer result = customerService.find(1L);
+        CustomerRepository result = customerService.find(1L);
         assertEquals(sampleCustomerForCustomerServiceTest, result);
     }
 
     @Test
     @DisplayName("CustomerService::save")
     void testSaveCustomer() {
-        when(mockCustomerRepository.save(any(Customer.class))).thenReturn(sampleCustomerForCustomerServiceTest);
-        Customer savedCustomer = customerService.save(sampleCustomerForCustomerServiceTest);
+        when(mockCustomerRepository.save(any(CustomerRepository.class))).thenReturn(sampleCustomerForCustomerServiceTest);
+        CustomerRepository savedCustomer = customerService.save(sampleCustomerForCustomerServiceTest);
         assertEquals(sampleCustomerForCustomerServiceTest, savedCustomer);
     }
 
@@ -372,7 +371,7 @@ class MainTest {
     void testDeleteCustomerService() {
         when(mockCustomerRepository.findById(1L)).thenReturn(Optional.of(sampleCustomerForCustomerServiceTest));
         doNothing().when(mockCustomerRepository).delete(sampleCustomerForCustomerServiceTest);
-        Customer deletedCustomer = customerService.delete(1L);
+        CustomerRepository deletedCustomer = customerService.delete(1L);
         assertEquals(sampleCustomerForCustomerServiceTest, deletedCustomer);
     }
 
