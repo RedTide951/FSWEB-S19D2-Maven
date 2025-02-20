@@ -1,6 +1,6 @@
 package com.workintech.s18d4.controller;
 
-import com.workintech.s18d4.entity.CustomerRepository;
+import com.workintech.s18d4.entity.Customer;
 import com.workintech.s18d4.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,22 +15,22 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
-    public List<CustomerRepository> getAllCustomers() {
+    public List<Customer> getAllCustomers() {
         return customerService.findAll();
     }
 
     @GetMapping("/{id}")
-    public CustomerRepository getCustomerById(@PathVariable Long id) {
+    public Customer getCustomerById(@PathVariable Long id) {
         return customerService.findById(id);
     }
 
     @PostMapping
-    public CustomerRepository createCustomer(@RequestBody CustomerRepository customer) {
+    public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.save(customer);
     }
 
     @PutMapping("/{id}")
-    public CustomerRepository updateCustomer(@PathVariable Long id, @RequestBody CustomerRepository customer) {
+    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
         return customerService.update(id, customer);
     }
 

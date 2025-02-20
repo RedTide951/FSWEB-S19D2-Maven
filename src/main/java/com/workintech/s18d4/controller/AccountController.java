@@ -1,7 +1,6 @@
 package com.workintech.s18d4.controller;
 
-import com.workintech.s18d4.entity.AccountRepository;
-import com.workintech.s18d4.service.AccountService;
+import com.workintech.s18d4.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,22 +14,22 @@ public class AccountController {
     private AccountService accountService;
 
     @GetMapping
-    public List<AccountRepository> getAllAccounts() {
+    public List<Account> getAllAccounts() {
         return accountService.findAll();
     }
 
     @GetMapping("/{id}")
-    public AccountRepository getAccountById(@PathVariable Long id) {
+    public Account getAccountById(@PathVariable Long id) {
         return accountService.findById(id);
     }
 
     @PostMapping("/{customerId}")
-    public AccountRepository createAccount(@PathVariable Long customerId, @RequestBody AccountRepository account) {
+    public Account createAccount(@PathVariable Long customerId, @RequestBody Account account) {
         return accountService.save(customerId, account);
     }
 
     @PutMapping("/{customerId}")
-    public AccountRepository updateAccount(@PathVariable Long customerId, @RequestBody AccountRepository account) {
+    public Account updateAccount(@PathVariable Long customerId, @RequestBody Account account) {
         return accountService.update(customerId, account);
     }
 

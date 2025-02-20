@@ -5,15 +5,20 @@ import lombok.Data;
 
 @Entity
 @Data
-public class AccountRepository {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "account_name")
     private String accountName;
+
+    @Column(name = "money_amount")
     private double moneyAmount;
 
-    @ManyToOne
+    @ManyToOne( cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "customer_id")
-    private CustomerRepository customer;
+    private Customer customer;
+
+
 }
