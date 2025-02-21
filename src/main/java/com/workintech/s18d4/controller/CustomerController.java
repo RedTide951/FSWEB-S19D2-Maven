@@ -1,40 +1,36 @@
 package com.workintech.s18d4.controller;
 
+import com.workintech.s18d4.dto.CustomerResponse;
 import com.workintech.s18d4.entity.Customer;
 import com.workintech.s18d4.service.CustomerService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("/workintech/customers")
+@RequestMapping("/customer")
 public class CustomerController {
-
-    @Autowired
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @GetMapping
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAll() {
         return customerService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
-        return customerService.findById(id);
+    public Customer get(@PathVariable Long id) {
+        return customerService.find(id);
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.save(customer);
+    public CustomerResponse save(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.save(customer);
+        return new CustomerResponse(savedCustomer.getId(), savedCustomer.getEmail(), savedCustomer.getSalary());
     }
 
-    @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
-        return customerService.update(id, customer);
-    }
 
-    @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable Long id) {
-        customerService.delete(id);
-    }
+
+}
